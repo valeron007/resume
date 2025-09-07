@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
 from passlib.context import CryptContext
-from src.models import User
+from src.models import User, Resume
 from src.schema import UserCreate, UserLogin, Token
 from depencies import get_db
 import bcrypt
@@ -35,6 +35,6 @@ print(password_byte_enc)
 # pwd_context.verify(password, pwd_context.hash(password))  # True
 
 
-
+# eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzU3Mjc3NTA4fQ.Ww7PvXmavn_rW-ozU2bVOu06iGbtqEIBodrjXWFfdi0
 
 
