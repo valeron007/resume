@@ -17,20 +17,12 @@ db = SessionLocal()
 
 Base = declarative_base()
 
-login = "valeron5@gmail.com"
+login = "valeron@gmail.com"
 
-# users = db.query(User).all()
-# print(users)
-user = db.query(User).filter(User.email == login).first()
+users = db.query(User).all()
+print(users)
 
-password = "valeron"
 
-print(type(user.password))
-
-password_byte_enc = password.encode('utf-8')
-result = bcrypt.checkpw(password=password_byte_enc, hashed_password=user.password.encode('utf-8'))
-print(result)
-print(password_byte_enc)
 # pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 # pwd_context.verify(password, pwd_context.hash(password))  # True
 
