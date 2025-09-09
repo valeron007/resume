@@ -3,3 +3,5 @@ backend/__pycache__
 /frontend/package-lock.json
 /__pycache__/app.cpython-313.pyc
 /src/resume/__pycache__/routes.cpython-313.pyc
+
+command
