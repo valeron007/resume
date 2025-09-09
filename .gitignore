@@ -1,4 +1,4 @@
 backend/__pycache__
-backend/frontend/node_modules
-backend/frontend/package-lock.json
-backend/__pycache__/app.cpython-313.pyc
+/frontend/node_modules
+/frontend/package-lock.json
+/__pycache__/app.cpython-313.pyc
