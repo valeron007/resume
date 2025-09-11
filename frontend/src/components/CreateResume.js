@@ -1,7 +1,3 @@
-import { useForm } from "react-hook-form";
-import { Navigate, useNavigate } from 'react-router-dom';
-
-
 
 export default function CreateResume() {
     function handleSubmit(e) {        
@@ -20,7 +16,7 @@ export default function CreateResume() {
             },
             body: JSON.stringify(Object.fromEntries(formData.entries()))
         }).then(response => response.json())
-        .then(data => {            
+        .then(() => {            
             window.location.href = '/'
         })
         

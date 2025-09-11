@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { NavLink } from "react-router-dom";
 
+
 export default function GetResumes() {
     const [resumes, setResume] = useState([])
 
@@ -16,6 +17,7 @@ export default function GetResumes() {
         .then(response => response.json())        
         .then(data => setResume(data))        
       }, [])
+    
 
     return (        
         <div class='resume-data'>

@@ -23,6 +23,7 @@ export default function LoginForm() {
         let result = await response.json();
         localStorage.setItem('access_token', result.access_token);
         localStorage.setItem('token_type', result.token_type);
+        window.location.href = '/'
     };
     
     return (

@@ -28,7 +28,7 @@ alembic init alembic
 
 alembic revision --autogenerate -m 'initial'
 
-alembic upgrade 143a57a7c33f
+alembic upgrade 159c582c0a4f
 
 uvicorn main:app
 
@@ -51,5 +51,13 @@ We suggest that you begin by typing:
 
   cd frontend
   npm start
+
+
+npm run build
+# after build
+
+npm install -g serve
+serve -s build
+
 
 

@@ -33,6 +33,26 @@ services:
     volumes:      
       - db_data:/var/lib/postgresql@17/data:rw
 
+  frontend:
+    container_name: frontend-react
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile      
+    networks:
+      app_test_resume:
+        ipv4_address: 172.23.1.5
+    ports: 
+      - "3000:3000"
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend
+          target: /frontend
+          ignore:
+            - node_modules
+    volumes:
+      - ./frontend:/frontend            
+
 networks:
   app_test_resume:    
     name: app_test_resume
