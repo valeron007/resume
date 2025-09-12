@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from src.models import Resume, User
 from src.resume.schema import ResumeModel, ResumeUpdateModel, ResumeImproveModel
@@ -11,9 +11,13 @@ resume_router = APIRouter()
 
 @resume_router.post('/create')
 def create_resume(resume_data: ResumeModel, db:Session = Depends(get_db), user: User = Depends(get_current_user)):    
-    resume = Resume(title=resume_data.title, content=resume_data.content, user=user)
-    db.add(resume)
-    db.commit()
+    try:
+        resume = Resume(title=resume_data.title, content=resume_data.content, user=user)
+        db.add(resume)
+        db.commit()
+    except Exception as error:
+        return HTTPException(status_code=error)
+    
 
     return JSONResponse(
         status_code=status.HTTP_201_CREATED,
@@ -23,7 +27,10 @@ def create_resume(resume_data: ResumeModel, db:Session = Depends(get_db), user: 
 
 @resume_router.get('/lists')
 def get_resumes(db:Session = Depends(get_db), user: User = Depends(get_current_user)):
-    resumes = db.query(Resume).filter(Resume.user_id == user.id).all()
+    try:
+        resumes = db.query(Resume).filter(Resume.user_id == user.id).all()
+    except Exception as error:
+        return HTTPException(status_code=error)
 
     return JSONResponse(
         status_code=200,
@@ -33,7 +40,10 @@ def get_resumes(db:Session = Depends(get_db), user: User = Depends(get_current_u
 
 @resume_router.get('/{id}')
 def get_resume(id: int, db:Session = Depends(get_db), user: User = Depends(get_current_user)):
-    resume = db.query(Resume).filter(Resume.id == id).first()
+    try:
+        resume = db.query(Resume).filter(Resume.id == id).first()
+    except Exception as error:
+        return HTTPException(status_code=error)
 
     return JSONResponse(
         status_code=200,
@@ -42,9 +52,12 @@ def get_resume(id: int, db:Session = Depends(get_db), user: User = Depends(get_c
 
 @resume_router.delete('/{id}')
 def delete_resume(id, db:Session = Depends(get_db), user: User = Depends(get_current_user)):
-    resume = db.query(Resume).filter(Resume.id == id, Resume.user_id == user.id).first()
-    db.delete(resume)
-    db.commit()
+    try:
+        resume = db.query(Resume).filter(Resume.id == id, Resume.user_id == user.id).first()
+        db.delete(resume)
+        db.commit()
+    except Exception as error:
+        return HTTPException(status_code=error)
 
     return JSONResponse(
         status_code=status.HTTP_200_OK,
@@ -53,10 +66,13 @@ def delete_resume(id, db:Session = Depends(get_db), user: User = Depends(get_cur
 
 @resume_router.put('/')
 def update_task(resume_data: ResumeUpdateModel, db:Session = Depends(get_db), user: User = Depends(get_current_user)):
-    resume = db.query(Resume).filter(Resume.id == resume_data.id, Resume.user_id == user.id).first()
-    resume.title = resume_data.title
-    resume.content = resume_data.content
-    db.commit()
+    try:
+        resume = db.query(Resume).filter(Resume.id == resume_data.id, Resume.user_id == user.id).first()
+        resume.title = resume_data.title
+        resume.content = resume_data.content
+        db.commit()
+    except Exception as error:
+        return HTTPException(status_code=error)
 
     return JSONResponse(
         status_code=200,

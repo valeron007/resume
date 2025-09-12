@@ -8,18 +8,20 @@ user_router = APIRouter()
 
 @user_router.post('/signup')
 def signup(user_data: UserCreate, db:Session = Depends(get_db)):
-    user = User(email=user_data.email)
-    user.hashed_password(user_data.password)
-    db.add(user)
-    db.commit()
-
+    try:
+        user = User(email=user_data.email)
+        user.hashed_password(user_data.password)
+        db.add(user)
+        db.commit()
+    except Exception as error:
+        return HTTPException(status_code=error)
+    
     return {
         "message": "User create"
     }
 
 @user_router.post('/login')
-def login(user_data: UserCreate, db:Session = Depends(get_db)):
-    
+def login(user_data: UserCreate, db:Session = Depends(get_db)):    
     user = db.query(User).filter(User.email == user_data.email).first()
     
     if user is None or not user.check_password(user_data.password):
